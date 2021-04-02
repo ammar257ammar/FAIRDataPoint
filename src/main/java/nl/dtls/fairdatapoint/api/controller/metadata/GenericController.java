@@ -22,6 +22,7 @@
  */
 package nl.dtls.fairdatapoint.api.controller.metadata;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.dtls.fairdatapoint.entity.exception.ForbiddenException;
 import nl.dtls.fairdatapoint.entity.exception.ValidationException;
@@ -35,6 +36,7 @@ import nl.dtls.fairdatapoint.service.metadata.enhance.MetadataEnhancer;
 import nl.dtls.fairdatapoint.service.metadata.exception.MetadataServiceException;
 import nl.dtls.fairdatapoint.service.metadata.factory.MetadataServiceFactory;
 import nl.dtls.fairdatapoint.service.metadata.state.MetadataStateService;
+import nl.dtls.fairdatapoint.service.openapi.OpenApiService;
 import nl.dtls.fairdatapoint.service.resource.ResourceDefinitionService;
 import nl.dtls.fairdatapoint.service.shape.ShapeService;
 import nl.dtls.fairdatapoint.service.user.CurrentUserService;
@@ -85,6 +87,10 @@ public class GenericController {
     @Autowired
     private CurrentUserService currentUserService;
 
+    @Autowired
+    private OpenApiService openApiService;
+
+    @Operation(hidden = true)
     @RequestMapping(
             value = "**/spec",
             method = RequestMethod.GET,
@@ -93,6 +99,7 @@ public class GenericController {
         return shapeService.getShaclFromShapes();
     }
 
+    @Operation(hidden = true)
     @RequestMapping(
             value = "**/expanded",
             method = RequestMethod.GET,
@@ -149,6 +156,7 @@ public class GenericController {
         return resultRdf;
     }
 
+    @Operation(hidden = true)
     @RequestMapping(
             value = "**",
             method = RequestMethod.GET,
@@ -193,6 +201,7 @@ public class GenericController {
         return resultRdf;
     }
 
+    @Operation(hidden = true)
     @RequestMapping(
             value = "**",
             method = RequestMethod.POST,
@@ -233,6 +242,7 @@ public class GenericController {
                 .body(metadata);
     }
 
+    @Operation(hidden = true)
     @RequestMapping(
             value = "**",
             method = RequestMethod.PUT,
@@ -267,6 +277,7 @@ public class GenericController {
                 .ok(metadata);
     }
 
+    @Operation(hidden = true)
     @RequestMapping(value = "**", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteMetadata(HttpServletRequest request) throws MetadataServiceException {
         // 1. Init

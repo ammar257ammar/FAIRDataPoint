@@ -22,6 +22,7 @@
  */
 package nl.dtls.fairdatapoint.api.controller.metadata;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.dtls.fairdatapoint.api.dto.member.MemberCreateDTO;
 import nl.dtls.fairdatapoint.api.dto.member.MemberDTO;
@@ -62,6 +63,7 @@ public class GenericMemberController {
     @Autowired
     private MetadataServiceFactory metadataServiceFactory;
 
+    @Operation(hidden = true)
     @RequestMapping(value = "**/members", method = RequestMethod.GET)
     public ResponseEntity<List<MemberDTO>> getMembers(HttpServletRequest request)
             throws ResourceNotFoundException, MetadataServiceException {
@@ -80,6 +82,7 @@ public class GenericMemberController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @Operation(hidden = true)
     @RequestMapping(value = "**/members/{userUuid}", method = RequestMethod.PUT)
     public ResponseEntity<MemberDTO> putMember(@PathVariable final String userUuid,
                                                HttpServletRequest request,
@@ -101,6 +104,7 @@ public class GenericMemberController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @Operation(hidden = true)
     @RequestMapping(value = "**/members/{userUuid}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteMember(@PathVariable final String userUuid, HttpServletRequest request)
             throws ResourceNotFoundException, MetadataServiceException {

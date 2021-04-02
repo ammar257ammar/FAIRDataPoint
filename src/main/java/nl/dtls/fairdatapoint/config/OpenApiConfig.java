@@ -24,6 +24,7 @@ package nl.dtls.fairdatapoint.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
@@ -39,6 +40,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -84,6 +86,9 @@ public class OpenApiConfig {
         if (serverUrl != null) {
             openAPI.servers(Collections.singletonList(new Server().url(serverUrl)));
         }
+        openAPI.setExtensions(new LinkedHashMap<>());
+        openAPI.getExtensions().put("fdpGenericPaths", new Paths());
+        openAPI.setPaths(new Paths());
         return openAPI;
     }
 }
