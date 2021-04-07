@@ -76,3 +76,10 @@ springdoc:
 
 server:
   forward-headers-strategy: framework
+
+mongock:
+  enabled: true
+  change-logs-scan-package:
+    - nl.dtls.fairdatapoint.database.mongo.migration.production
+  legacy-migration:
+    origin: dbchangelog

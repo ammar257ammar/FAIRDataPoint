@@ -22,13 +22,16 @@
  */
 package nl.dtls.fairdatapoint.config;
 
-import com.github.mongobee.Mongobee;
+import com.github.cloudyrock.mongock.driver.mongodb.springdata.v3.SpringDataMongoV3Driver;
+import com.github.cloudyrock.spring.v5.MongockSpring5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
@@ -43,13 +46,14 @@ public class MongoConfig {
     @Autowired
     private Environment environment;
 
-    @Bean
-    public Mongobee mongobee() throws Exception {
-        Mongobee runner = new Mongobee(mongoUri);
-        runner.setChangeLogsScanPackage("nl.dtls.fairdatapoint");
-        runner.setSpringEnvironment(environment);
-        runner.execute();
-        return runner;
+    @Bean("mongockRunner")
+    public MongockSpring5.MongockApplicationRunner mongockApplicationRunner(
+            ApplicationContext springContext,
+            MongoTemplate mongoTemplate) {
+        return MongockSpring5.builder()
+                .setDriver(SpringDataMongoV3Driver.withDefaultLock(mongoTemplate))
+                .addChangeLogsScanPackage("nl.dtls.fairdatapoint.database.mongo.migration.production")
+                .setSpringContext(springContext)
+                .buildApplicationRunner();
     }
-
 }

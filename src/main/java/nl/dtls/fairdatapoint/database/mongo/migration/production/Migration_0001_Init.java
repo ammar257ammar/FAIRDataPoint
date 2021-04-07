@@ -22,8 +22,8 @@
  */
 package nl.dtls.fairdatapoint.database.mongo.migration.production;
 
-import com.github.mongobee.changeset.ChangeLog;
-import com.github.mongobee.changeset.ChangeSet;
+import com.github.cloudyrock.mongock.ChangeLog;
+import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import nl.dtls.fairdatapoint.Profiles;
@@ -36,7 +36,7 @@ import org.springframework.context.annotation.Profile;
 @Profile(Profiles.PRODUCTION)
 public class Migration_0001_Init {
 
-    @ChangeSet(order = "0001", id = "0001_init", author = "migrationBot")
+    @ChangeSet(order = "0001", id = "Migration_0001_Init", author = "migrationBot")
     public void run(MongoDatabase db) {
         MongoCollection<Document> userCol = db.getCollection("user");
         userCol.insertOne(userAlbert());
